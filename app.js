@@ -8,7 +8,7 @@
 // Tant que tu ne l'as pas fait, les noms sont quand même sauvegardés
 // dans le navigateur (localStorage) et exportables via la console secrète.
 //
-const GOOGLE_SHEET_URL = "COLLE_TON_URL_APPS_SCRIPT_ICI";
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycby8II4NWAMHV8Or2tkQi8rxlZAAT0iHGhohwJJa3xQqWt4MpF6s5HqICNcenGd5zm0u/exec";
 
 document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
