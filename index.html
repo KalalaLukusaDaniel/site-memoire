@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remerciements du Mémoire de Daniel - Brand New Day !</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Aide Daniel à finaliser son mémoire en laissant ton nom pour la page des remerciements officiels ! Simple, rapide et amazing.">
+  <meta name="keywords" content="mémoire, remerciements, collecte, université, fun, spiderman, daniel">
+
+  <!-- Google Fonts: Bangers (Comic Display) & Outfit (Modern Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- canvas-confetti library for high-performance celebration effects -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- ======================================================================
+       VIDÉO DE FOND : edit du trailer Spider-Man Brand New Day, en boucle,
+       sans son (c'est la musique MP3 qui joue à la place).
+       ====================================================================== -->
+  <div class="video-bg" aria-hidden="true">
+    <video id="trailer-bg" autoplay muted loop playsinline preload="auto">
+      <source src="assets/trailer-edit.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- Musique du site : Brand New Day (à partir de 1:25), en boucle -->
+  <audio id="site-music" src="assets/brand-new-day.mp3" loop preload="auto"></audio>
+
+  <!-- Bouton musique -->
+  <button id="sound-toggle" class="sound-toggle" aria-pressed="false" title="Activer / couper la musique">🔇 Brand New Day Song</button>
+
+  <!-- Spider-web corners (pure SVG decoration) -->
+  <svg class="web-corner web-corner-tl" viewBox="0 0 200 200" aria-hidden="true">
+    <g fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M0 0 L200 0 M0 0 L190 62 M0 0 L155 126 M0 0 L100 173 M0 0 L52 193 M0 0 L0 200"/>
+      <path d="M40 0 Q38 28 0 40 M80 0 Q76 56 0 80 M120 0 Q114 84 0 120 M160 0 Q152 112 0 160 M200 0 Q190 140 0 200"/>
+    </g>
+  </svg>
+  <svg class="web-corner web-corner-br" viewBox="0 0 200 200" aria-hidden="true">
+    <g fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M200 200 L0 200 M200 200 L10 138 M200 200 L45 74 M200 200 L100 27 M200 200 L148 7 M200 200 L200 0"/>
+      <path d="M160 200 Q162 172 200 160 M120 200 Q124 144 200 120 M80 200 Q86 116 200 80 M40 200 Q48 88 200 40 M0 200 Q10 60 200 0"/>
+    </g>
+  </svg>
+
+  <!-- ======================================================================
+       MUR DE SPIDEY : GIF animés en arrière-plan pendant le remplissage
+       (dont 2 GIF du teaser de Spider-Man: Brand New Day — sortie 31 juillet)
+       ====================================================================== -->
+  <div class="gif-wall" aria-hidden="true">
+    <img src="https://media1.tenor.com/m/NnKbvfjHaaUAAAAd/spiderman-spider-man.gif"
+         alt="" class="wall-gif wall-1" onerror="this.style.display='none'">
+    <img src="https://media1.tenor.com/m/L1hubOoT-pMAAAAC/spider-man-rider-kick.gif"
+         alt="" class="wall-gif wall-2" onerror="this.style.display='none'">
+    <img src="https://media1.tenor.com/m/1RTsNlkmrcIAAAAC/spider-man-thumbs-up-spider-man3thumbs-up.gif"
+         alt="" class="wall-gif wall-3" onerror="this.style.display='none'">
+    <img src="https://media1.tenor.com/m/gWJkiddPreMAAAAd/spider-man-spiderman.gif"
+         alt="" class="wall-gif wall-4" onerror="this.style.display='none'">
+    <img src="https://media1.tenor.com/m/SQgMfdW6xWYAAAAC/spiderman-swinging.gif"
+         alt="" class="wall-gif wall-5" onerror="this.style.display='none'">
+    <img src="https://media1.tenor.com/m/JGFocXAo8hYAAAAC/spiderman-graduation.gif"
+         alt="" class="wall-gif wall-6" onerror="this.style.display='none'">
+    <div class="wall-veil"></div>
+  </div>
+
+  <!-- Interactive Background Canvas for subtle animations if needed -->
+  <canvas id="celebration-canvas"></canvas>
+
+  <!-- Main Container -->
+  <main class="main-wrapper">
+    <div class="card-container">
+
+      <!-- Comic banner: Spidey graduation -->
+      <div class="hero-banner">
+        <img src="https://media1.tenor.com/m/JGFocXAo8hYAAAAC/spiderman-graduation.gif"
+             alt="Spider-Man en toge et chapeau de graduation" class="hero-gif">
+        <span class="hero-badge">Brand New Day</span>
+      </div>
+
+      <!-- Header -->
+      <header class="hero-header">
+        <h1 class="main-title">Formulaire pour la page des <span id="admin-trigger" class="secret-trigger">remerciements</span> du mémoire de <span class="spidey-text">Daniel</span></h1>
+        <p class="subtitle">
+          Remplissez tous, vous êtes tous les bienvenus dans la toile&nbsp;! 🕸️
+        </p>
+      </header>
+
+      <!-- Form -->
+      <form id="submission-form" class="main-form" autocomplete="off" novalidate>
+        <div class="form-row">
+          <!-- First name (obligatoire) -->
+          <div class="input-group" id="group-firstname">
+            <label for="firstname">Ton Prénom <span class="required-star">*</span></label>
+            <input type="text" id="firstname" name="firstname" required>
+            <span class="focus-border"></span>
+            <span class="field-error" id="error-firstname" role="alert"></span>
+          </div>
+
+          <!-- Last name (obligatoire) -->
+          <div class="input-group" id="group-lastname">
+            <label for="lastname">Ton Nom <span class="required-star">*</span></label>
+            <input type="text" id="lastname" name="lastname" required>
+            <span class="focus-border"></span>
+            <span class="field-error" id="error-lastname" role="alert"></span>
+          </div>
+        </div>
+
+        <!-- Pseudo (optionnel) -->
+        <div class="input-group" id="group-nickname">
+          <label for="nickname">Ton Pseudo <span class="optional-tag">(optionnel)</span></label>
+          <input type="text" id="nickname" name="nickname">
+          <span class="focus-border"></span>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="submit-btn" class="submit-button">
+          <span class="btn-text">Thwip ! Envoyer 🕷️</span>
+          <span class="btn-glow"></span>
+        </button>
+      </form>
+
+      <!-- Kai-Zen signature -->
+      <p class="signature">Design by <span class="kaizen">Kai-Zen</span> · Amazing Edition</p>
+    </div>
+  </main>
+
+  <!-- Celebration Modal (Confetti + Spidey Graduation GIF) -->
+  <div id="celebration-overlay" class="overlay hidden" aria-hidden="true">
+    <div class="celebration-content">
+      <div class="gif-wrapper">
+        <!-- Andrew Garfield (Peter Parker) en toge de graduation — The Amazing Spider-Man 2 -->
+        <img src="https://media1.tenor.com/m/Zeaaa7oH1GgAAAAC/the-amazing-spiderman.gif" alt="Peter Parker (Andrew Garfield) diplômé qui célèbre" class="celebration-gif">
+      </div>
+      <h2 class="celebration-title">MERCI !</h2>
+      <p class="celebration-subtitle">Ton nom est pris dans la toile des remerciements&nbsp;! 🕸️🎓</p>
+    </div>
+  </div>
+
+  <!-- Hidden Admin Panel Modal -->
+  <div id="admin-overlay" class="overlay hidden" aria-hidden="true">
+    <div class="admin-card">
+      <div class="admin-header">
+        <h2>Console d'Administration</h2>
+        <button id="close-admin-btn" class="close-btn" aria-label="Fermer l'administration">&times;</button>
+      </div>
+
+      <div class="admin-stats">
+        <p>Total de contributeurs : <strong id="admin-count">0</strong></p>
+      </div>
+
+      <div class="admin-actions">
+        <button id="export-json-btn" class="admin-action-btn primary">Télécharger JSON</button>
+        <button id="export-csv-btn" class="admin-action-btn primary">Télécharger CSV</button>
+        <button id="reset-data-btn" class="admin-action-btn danger">Réinitialiser tout</button>
+      </div>
+
+      <div class="admin-table-wrapper">
+        <table id="admin-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Prénom</th>
+              <th>Nom</th>
+              <th>Pseudo</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-table-body">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>

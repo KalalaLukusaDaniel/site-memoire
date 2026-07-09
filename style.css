@@ -1,0 +1,686 @@
+/* ==========================================================================
+   SITE MÉMOIRE DE DANIEL — Thème Spider-Man: Brand New Day
+   Design by Kai-Zen · rouge héroïque, bleu profond, toiles et points comics
+   ========================================================================== */
+
+:root {
+  /* Palette Brand New Day */
+  --spidey-red: #e02434;
+  --spidey-red-dark: #b0121f;
+  --spidey-blue: #1b3b9e;
+  --spidey-blue-deep: #0b1440;
+  --spidey-navy: #070d2b;
+  --ink: #10131f;
+  --paper: #fffdf7;
+  --gold: #f5c518;
+
+  --text-main: #10131f;
+  --text-muted: #5b6070;
+  --text-invert: #fffdf7;
+
+  --border-comic: 3px solid var(--ink);
+  --shadow-comic: 8px 8px 0 rgba(16, 19, 31, 0.85);
+  --shadow-comic-sm: 4px 4px 0 rgba(16, 19, 31, 0.85);
+
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 9px;
+
+  --font-display: 'Bangers', 'Impact', cursive;
+  --font-body: 'Outfit', 'Segoe UI', sans-serif;
+}
+
+/* ==========================================================================
+   RESET & BASE
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-main);
+  min-height: 100vh;
+  /* Fond "Brand New Day" : nuit urbaine bleu profond + halos rouge/bleu + points comics */
+  background-color: var(--spidey-navy);
+  background-image:
+    radial-gradient(ellipse 60% 45% at 12% 8%, rgba(224, 36, 52, 0.32), transparent 70%),
+    radial-gradient(ellipse 55% 45% at 88% 92%, rgba(27, 59, 158, 0.5), transparent 70%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 1px, transparent 1.6px);
+  background-size: 100% 100%, 100% 100%, 26px 26px;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   DECORATIONS : toiles d'araignée + spidey balançoire
+   ========================================================================== */
+.web-corner {
+  position: fixed;
+  width: min(230px, 32vw);
+  height: min(230px, 32vw);
+  color: rgba(255, 255, 255, 0.22);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.web-corner-tl { top: 0; left: 0; }
+.web-corner-br { bottom: 0; right: 0; }
+
+/* --- Vidéo de fond : trailer Brand New Day en boucle --- */
+.video-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #05081c; /* si la vidéo ne charge pas, on garde la nuit urbaine */
+  pointer-events: none; /* on ne peut pas cliquer sur la vidéo, elle reste déco */
+}
+
+.video-bg video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* la vidéo remplit tout l'écran, quel que soit son format */
+  opacity: 0.6; /* tamisée pour que le formulaire reste lisible */
+}
+
+/* --- Bouton son du trailer --- */
+.sound-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 30;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+  color: var(--text-invert);
+  background: var(--spidey-red);
+  border: var(--border-comic);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow-comic-sm);
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.sound-toggle:hover {
+  transform: translate(-1px, -1px);
+  background: var(--spidey-blue);
+}
+
+.sound-toggle:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(16, 19, 31, 0.85);
+}
+
+.sound-toggle.is-on {
+  background: var(--spidey-blue);
+}
+
+/* --- Mur de GIF Spidey animés derrière le formulaire --- */
+.gif-wall {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wall-gif {
+  position: absolute;
+  width: clamp(150px, 19vw, 300px);
+  border: var(--border-comic);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-comic-sm), 0 0 40px rgba(224, 36, 52, 0.35);
+  object-fit: cover;
+  animation: wall-float 7s ease-in-out infinite;
+}
+
+/* Placement façon planche de comics, autour de la carte centrale */
+.wall-1 { top: 4%;  left: -2%;  transform: rotate(-7deg); animation-delay: 0s; }   /* Brand New Day : swing sur la ville */
+.wall-2 { top: 40%; left: -3%;  transform: rotate(5deg);  animation-delay: 1.2s; } /* Brand New Day : rider kick sur le tank */
+.wall-3 { bottom: 3%; left: 6%; transform: rotate(-4deg); animation-delay: 2.4s; } /* Pouce en l'air, tête en bas */
+.wall-4 { top: 5%;  right: -2%; transform: rotate(6deg);  animation-delay: 0.8s; } /* Plongeon au-dessus de la ville */
+.wall-5 { top: 42%; right: -2%; transform: rotate(-5deg); animation-delay: 2s; width: clamp(110px, 13vw, 200px); } /* Balancement */
+.wall-6 { bottom: 4%; right: 5%; transform: rotate(4deg); animation-delay: 3s; }   /* Spidey diplômé 🎓 */
+
+@keyframes wall-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -16px; }
+}
+
+/* Voile sombre pour garder le formulaire lisible par-dessus les GIF */
+.wall-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 62% 75% at 50% 50%, rgba(7, 13, 43, 0.82), rgba(7, 13, 43, 0.45) 60%, rgba(7, 13, 43, 0.3) 100%);
+}
+
+#celebration-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ==========================================================================
+   LAYOUT PRINCIPAL
+   ========================================================================== */
+.main-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 5vw, 60px);
+  position: relative;
+  z-index: 1;
+}
+
+.card-container {
+  width: 100%;
+  max-width: 640px;
+  background: var(--paper);
+  border: var(--border-comic);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-comic), 0 0 70px rgba(224, 36, 52, 0.25);
+  padding: 0 clamp(24px, 5vw, 48px) clamp(28px, 5vw, 40px);
+  overflow: hidden;
+  animation: card-drop 0.7s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+@keyframes card-drop {
+  from { opacity: 0; transform: translateY(-40px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ==========================================================================
+   BANNIÈRE HÉROS (Spidey graduation)
+   ========================================================================== */
+.hero-banner {
+  position: relative;
+  margin: 0 calc(-1 * clamp(24px, 5vw, 48px)) 26px;
+  border-bottom: var(--border-comic);
+  background: var(--spidey-blue-deep);
+}
+
+.hero-gif {
+  display: block;
+  width: 100%;
+  height: clamp(150px, 30vw, 210px);
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.hero-badge {
+  position: absolute;
+  bottom: -14px;
+  right: 22px;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 2px;
+  color: var(--text-invert);
+  background: var(--spidey-red);
+  border: var(--border-comic);
+  border-radius: var(--radius-sm);
+  padding: 4px 14px;
+  box-shadow: var(--shadow-comic-sm);
+  transform: rotate(-3deg);
+}
+
+/* ==========================================================================
+   EN-TÊTE
+   ========================================================================== */
+.hero-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.main-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.7rem, 5.5vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: 1.5px;
+  color: var(--ink);
+  text-wrap: balance;
+  animation: stagger-in 0.6s ease-out 0.15s both;
+}
+
+.spidey-text {
+  color: var(--spidey-red);
+  text-shadow:
+    2px 2px 0 var(--spidey-blue),
+    4px 4px 0 rgba(16, 19, 31, 0.25);
+  display: inline-block;
+  transform: rotate(-2deg);
+  padding: 0 4px;
+}
+
+.secret-trigger {
+  cursor: default;
+  user-select: none;
+}
+
+.subtitle {
+  margin-top: 14px;
+  font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+  font-weight: 500;
+  color: var(--text-muted);
+  animation: stagger-in 0.6s ease-out 0.3s both;
+}
+
+/* ==========================================================================
+   FORMULAIRE
+   ========================================================================== */
+.main-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: stagger-in 0.55s ease-out both;
+}
+
+.main-form .input-group:nth-of-type(1),
+.form-row .input-group:nth-of-type(1) { animation-delay: 0.4s; }
+.form-row .input-group:nth-of-type(2) { animation-delay: 0.5s; }
+.main-form > .input-group { animation-delay: 0.6s; }
+
+@keyframes stagger-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.input-group label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--spidey-blue);
+}
+
+.input-group input {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-main);
+  background: #fff;
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.input-group input:focus {
+  border-color: var(--spidey-red);
+  box-shadow: 4px 4px 0 rgba(224, 36, 52, 0.8);
+  transform: translate(-2px, -2px);
+}
+
+.focus-border { display: none; }
+
+/* --- Champs obligatoires / optionnels & messages d'erreur --- */
+.required-star {
+  color: var(--spidey-red);
+  font-size: 1em;
+}
+
+.optional-tag {
+  text-transform: none;
+  letter-spacing: 0.3px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.field-error {
+  display: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--spidey-red-dark);
+}
+
+.input-group.has-error .field-error {
+  display: block;
+  animation: error-pop 0.25s ease-out;
+}
+
+.input-group.has-error input {
+  border-color: var(--spidey-red);
+  box-shadow: 4px 4px 0 rgba(224, 36, 52, 0.55);
+  animation: input-shake 0.35s ease;
+}
+
+@keyframes error-pop {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes input-shake {
+  0%, 100% { translate: 0 0; }
+  20% { translate: -6px 0; }
+  40% { translate: 6px 0; }
+  60% { translate: -4px 0; }
+  80% { translate: 4px 0; }
+}
+
+/* ==========================================================================
+   BOUTON D'ENVOI
+   ========================================================================== */
+.submit-button {
+  position: relative;
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 2.5px;
+  color: var(--text-invert);
+  background: linear-gradient(135deg, var(--spidey-red) 0%, var(--spidey-red-dark) 100%);
+  border: var(--border-comic);
+  border-radius: var(--radius-md);
+  padding: 15px 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow-comic-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease;
+  animation: stagger-in 0.55s ease-out 0.7s both;
+}
+
+.submit-button:hover {
+  background: linear-gradient(135deg, var(--spidey-blue) 0%, var(--spidey-blue-deep) 100%);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(16, 19, 31, 0.85);
+}
+
+.submit-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 rgba(16, 19, 31, 0.85);
+}
+
+.btn-glow { display: none; }
+
+/* ==========================================================================
+   SIGNATURE KAI-ZEN
+   ========================================================================== */
+.signature {
+  margin-top: 26px;
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  animation: stagger-in 0.55s ease-out 0.85s both;
+}
+
+.signature .kaizen {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, var(--spidey-red), var(--spidey-blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ==========================================================================
+   OVERLAYS (Célébration & Admin)
+   ========================================================================== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 13, 43, 0.88);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1050;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --- Célébration --- */
+.celebration-content {
+  text-align: center;
+  background: var(--paper);
+  border: var(--border-comic);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-comic), 0 0 90px rgba(224, 36, 52, 0.5);
+  padding: 26px 30px 30px;
+  max-width: 460px;
+  width: 100%;
+  animation: pop-in 0.45s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.6) rotate(-4deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+.gif-wrapper {
+  border: var(--border-comic);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-comic-sm);
+  margin-bottom: 20px;
+  background: var(--spidey-blue-deep);
+}
+
+.celebration-gif {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+.celebration-title {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  letter-spacing: 4px;
+  color: var(--spidey-red);
+  text-shadow: 3px 3px 0 var(--spidey-blue), 5px 5px 0 rgba(16, 19, 31, 0.2);
+}
+
+.celebration-subtitle {
+  margin-top: 8px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* --- Console d'Administration --- */
+.admin-card {
+  background: var(--spidey-navy);
+  color: var(--text-invert);
+  border: 3px solid var(--spidey-red);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 60px rgba(224, 36, 52, 0.35);
+  width: 100%;
+  max-width: 760px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  padding: 26px;
+  gap: 18px;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-header h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 2px;
+  font-size: 1.6rem;
+  color: var(--spidey-red);
+}
+
+.close-btn {
+  background: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--text-invert);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.close-btn:hover {
+  border-color: var(--spidey-red);
+  color: var(--spidey-red);
+  transform: rotate(90deg);
+}
+
+.admin-stats p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.admin-stats strong {
+  color: var(--gold);
+  font-size: 1.1rem;
+}
+
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-action-btn {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+
+.admin-action-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.admin-action-btn.primary {
+  background: var(--spidey-blue);
+  color: var(--text-invert);
+  border: 2px solid var(--spidey-blue);
+}
+
+.admin-action-btn.danger {
+  background: transparent;
+  color: var(--spidey-red);
+  border: 2px solid var(--spidey-red);
+}
+
+.admin-table-wrapper {
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+}
+
+#admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+#admin-table th,
+#admin-table td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+}
+
+#admin-table th {
+  position: sticky;
+  top: 0;
+  background: var(--spidey-blue-deep);
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.75rem;
+}
+
+.delete-row-btn {
+  background: transparent;
+  border: 1.5px solid var(--spidey-red);
+  color: var(--spidey-red);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.delete-row-btn:hover {
+  background: var(--spidey-red);
+  color: var(--text-invert);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 560px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-header,
+  .input-group label,
+  .subtitle {
+    text-align: center;
+  }
+
+  .spidey-swing {
+    width: 60px;
+    bottom: 10px;
+    left: 10px;
+  }
+
+  .celebration-title {
+    font-size: 2.3rem;
+  }
+}
+
+/* Réduction des animations si l'utilisateur le préfère */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
