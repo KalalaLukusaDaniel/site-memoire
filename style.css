@@ -672,17 +672,22 @@ body {
     height: 120px;
   }
 
-  /* 4 GIF visibles : 2 en haut, 2 en bas, plus petits */
+  /* Les 6 GIF visibles sur téléphone : 3 dans la bande du haut,
+     3 dans la bande du bas — tous derrière la carte, zéro chevauchement */
   .wall-gif {
-    width: clamp(105px, 30vw, 150px);
+    width: clamp(88px, 24vw, 125px);
     animation-duration: 5s;
   }
 
-  .wall-1 { top: 12px; left: 6%; }
-  .wall-4 { top: 26px; right: 6%; }
-  .wall-3 { bottom: 18px; left: 7%; }
-  .wall-6 { bottom: 30px; right: 6%; }
-  .wall-2, .wall-5 { display: none; }
+  /* Bande du haut : swing (gauche), rider kick (centre), plongeon (droite) */
+  .wall-1 { top: 58px; left: 3%; }
+  .wall-2 { display: block; top: 44px; left: 50%; margin-left: -55px; width: 110px; transform: rotate(3deg); }
+  .wall-4 { top: 62px; right: 3%; }
+
+  /* Bande du bas : pouce (gauche), balancement (centre), diplômé (droite) */
+  .wall-3 { bottom: 16px; left: 4%; }
+  .wall-5 { display: block; top: auto; bottom: 46px; left: 50%; right: auto; margin-left: -40px; width: 80px; transform: rotate(-4deg); }
+  .wall-6 { bottom: 26px; right: 4%; }
 
   /* Voile plus léger en haut/bas pour laisser vivre la vidéo et les GIF */
   .wall-veil {
@@ -708,10 +713,6 @@ body {
   .sound-toggle:hover {
     transform: translateX(-50%);
   }
-
-  /* On décale les GIF du haut sous le bouton musique */
-  .wall-1 { top: 54px; }
-  .wall-4 { top: 66px; }
 }
 
 @media (max-width: 560px) {
